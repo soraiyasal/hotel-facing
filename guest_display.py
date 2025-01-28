@@ -141,28 +141,157 @@ def show_guest_display():
     # Page config
     st.set_page_config(page_title="Hotel Sustainability Display", layout="wide")
     
-    # Custom CSS
+    # Custom CSS for enhanced visual engagement
     st.markdown("""
         <style>
+        /* Base styles with enhanced visuals */
         .green-header {
-            color: #006B3E;  /* Holiday Inn green */
+            color: #006B3E;
             text-align: center;
             padding: 1rem;
+            font-size: calc(1.5rem + 1vw);
+            margin-bottom: 0.5rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .subtitle {
+            font-size: calc(0.8rem + 0.5vw);
+            color: #666;
+            text-align: center;
+            margin-bottom: 2rem;
         }
         .metric-card {
-            background: white;
-            padding: 1rem;
-            border-radius: 0.5rem;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            background: linear-gradient(145deg, #ffffff, #f5f7f6);
+            padding: 1.8rem;
+            border-radius: 1.5rem;
+            box-shadow: 5px 5px 15px rgba(0,107,62,0.1),
+                       -5px -5px 15px rgba(255,255,255,0.8);
             text-align: center;
+            height: 100%;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,107,62,0.1);
+        }
+        .metric-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 8px 8px 20px rgba(0,107,62,0.15),
+                       -8px -8px 20px rgba(255,255,255,0.9);
+            border: 1px solid rgba(0,107,62,0.2);
+        }
+        .metric-card h3 {
+            color: #006B3E;
+            font-size: calc(1.3rem + 0.5vw);
+            margin-bottom: 0.8rem;
+            background: linear-gradient(45deg, #006B3E, #2E8B57);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+        .metric-card p {
+            font-size: calc(0.9rem + 0.2vw);
+            color: #555;
+            margin: 0.7rem 0;
+            line-height: 1.5;
+        }
+        .metric-card h4 {
+            color: #444;
+            font-size: calc(0.85rem + 0.2vw);
+            margin-top: 1rem;
+            padding: 0.5rem;
+            background: rgba(0,107,62,0.05);
+            border-radius: 1rem;
         }
         .hotel-select {
-            max-width: 300px;
-            margin: 0 auto;
+            max-width: min(300px, 90vw);
+            margin: 1.5rem auto;
+            background: white;
+            padding: 0.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0,107,62,0.1);
         }
-        div[data-testid="stSelectbox"] {
-            margin: 0 auto;
-            max-width: 300px;
+        
+        /* Progress card with enhanced styling */
+        .progress-card {
+            background: linear-gradient(145deg, #ffffff, #f5f7f6);
+            padding: 1.8rem;
+            border-radius: 1.5rem;
+            box-shadow: 5px 5px 15px rgba(0,107,62,0.1),
+                       -5px -5px 15px rgba(255,255,255,0.8);
+            margin: 0.8rem 0;
+            border: 1px solid rgba(0,107,62,0.1);
+            transition: all 0.3s ease;
+        }
+        .progress-card:hover {
+            box-shadow: 8px 8px 20px rgba(0,107,62,0.15),
+                       -8px -8px 20px rgba(255,255,255,0.9);
+        }
+        .progress-card h4 {
+            font-size: calc(1.1rem + 0.3vw);
+            margin-bottom: 1.2rem;
+            color: #006B3E;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        /* Champion card with enhanced styling */
+        .champion-card {
+            background: linear-gradient(145deg, #f8faf9, #ffffff);
+            padding: 2rem;
+            border-radius: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: 5px 5px 15px rgba(0,107,62,0.1),
+                       -5px -5px 15px rgba(255,255,255,0.8);
+            border: 1px solid rgba(0,107,62,0.1);
+            transition: all 0.3s ease;
+        }
+        .champion-card:hover {
+            box-shadow: 8px 8px 20px rgba(0,107,62,0.15),
+                       -8px -8px 20px rgba(255,255,255,0.9);
+        }
+        .champion-card img {
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border: 3px solid #006B3E;
+            transition: transform 0.3s ease;
+        }
+        .champion-card img:hover {
+            transform: scale(1.05);
+        }
+        
+        /* Section headers with enhanced styling */
+        .section-header {
+            color: #006B3E;
+            font-size: calc(1.2rem + 0.4vw);
+            margin: 2rem 0 1.5rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(0,107,62,0.1);
+            text-align: center;
+        }
+        
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .metric-card {
+                margin-bottom: 1.2rem;
+            }
+            .progress-card {
+                margin: 0.8rem 0;
+            }
+            [data-testid="column"] {
+                width: 100% !important;
+                flex: 1 1 100% !important;
+            }
+        }
+        
+        /* Progress bar enhancement */
+        div[role="progressbar"] {
+            border-radius: 1rem;
+            height: 0.8rem !important;
+            background: rgba(0,107,62,0.1);
+        }
+        div[role="progressbar"] > div {
+            background: linear-gradient(90deg, #006B3E, #2E8B57) !important;
+            border-radius: 1rem;
+            transition: width 1s ease-in-out;
         }
         </style>
     """, unsafe_allow_html=True)
@@ -175,10 +304,8 @@ def show_guest_display():
     # Get list of hotels
     hotels = sorted(data['waste']['Hotel'].unique())
     
-    # Hotel selector in center
-    st.markdown('<div class="hotel-select">', unsafe_allow_html=True)
+    # Hotel selector in center without the box
     selected_hotel = st.selectbox('Select Hotel', hotels)
-    st.markdown('</div>', unsafe_allow_html=True)
     
     # Calculate metrics for selected hotel
     metrics = calculate_guest_impact(data, selected_hotel)
@@ -187,8 +314,9 @@ def show_guest_display():
     
     # Header with hotel name
     st.markdown(f"""
-        <h1 class="green-header">Your Green Stay at {selected_hotel}</h1>
-        <p style='text-align: center; font-size: 1.2rem; color: #666;'>
+        <h1 class="green-header">Your Green Stay at</h1>
+        <h2 class="green-header" style="margin-top: -1rem;">{selected_hotel}</h2>
+        <p class="subtitle">
             Together we're making a difference - {metrics['month']}
         </p>
     """, unsafe_allow_html=True)
@@ -227,14 +355,14 @@ def show_guest_display():
     # Hotel Journey
     st.markdown("### Our Green Journey")
     
-    # Create 2x2 grid for progress cards
-    col1, col2 = st.columns(2)
+    # Create responsive grid for progress cards
+    col1, col2 = st.columns([1, 1])
     
     with col1:
         # Energy Progress
         energy_progress = 0.80  # Example: 80% progress
         st.markdown("""
-        <div style='padding: 1rem; background: white; border-radius: 0.5rem; margin: 0.5rem;'>
+        <div class="progress-card">
             <h4>⚡ Energy Reduction</h4>
         """, unsafe_allow_html=True)
         st.progress(energy_progress)
@@ -244,7 +372,7 @@ def show_guest_display():
         # Recycling Progress
         recycling_progress = metrics['recycling_rate'] / metrics['recycling_target']
         st.markdown("""
-        <div style='padding: 1rem; background: white; border-radius: 0.5rem; margin: 0.5rem;'>
+        <div class="progress-card">
             <h4>♻️ Recycling Rate</h4>
         """, unsafe_allow_html=True)
         st.progress(min(recycling_progress, 1.0))
